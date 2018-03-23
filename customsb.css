@@ -1,0 +1,22 @@
+.selbox * {font-family:helvetica,sans-serif;font-size:12px;margin:0px;padding:0px;border:none;}
+.selbox table {border-collapse:collapse;border-spacing:0px;}
+.selbox .sbunsel {outline:0px;}
+.selbox .sbsel {outline:0px;}
+.selbox a {
+    text-decoration: none;
+    color:black;
+}
+.sbsel {cursor:pointer;
+   background:#316AC5
+}
+.sbsel div {
+   background:#316AC5;
+   color:#FFFFFF
+}
+.sbunsel {cursor:pointer;
+   background:#FFFFFF
+}
+.sbunsel div {
+   background:#FFFFFF;
+   color:#000000
+}
