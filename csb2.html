@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="customsb.css">
+<script src="customsb.js"></script>
+</head>
+<body>
+<form id="testForm" name="testForm" action="csb2.html" onsubmit="vopt2.selAllOpt()" method="get">
+Current URL: <span id="curl"></span><br><br><br>
+
+<table cellpadding="0" cellspacing="0">
+<tr>
+<td>
+<table class="selbox" id="opt1" cellpadding="0" cellspacing="0"></table>
+</td>
+<td>
+<div style="margin:0px 10px 0px 10px"><input type="image" src="right.png" onclick="moveSelOpts(vopt1,vopt2);return false" alt="Select"><br>
+<input type="image" src="left.png" onclick="moveSelOpts(vopt2,vopt1);return false" alt="Unselect"><br>
+<input type="image" src="doubleright.png" onclick="moveAllOpts(vopt1,vopt2);return false" alt="Select All"><br>
+<input type="image" src="doubleleft.png" onclick="moveAllOpts(vopt2,vopt1);return false" alt="Unselect All"><br>
+<input type="image" src="down.png" onclick="moveDownSelOpt(vopt2);return false" alt="Move Down Selected"><br>
+<input type="image" src="up.png" onclick="moveUpSelOpt(vopt2);return false" alt="Move Up Selected">
+</div>
+</td>
+<td>
+<table class="selbox" id="opt2" cellpadding="0" cellspacing="0"></table>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+  document.getElementById("curl").innerHTML=window.location.href;
+
+  var vopt1=new SelBox("vopt1","opt1",200,150,true,true);
+  vopt1.addOpt("1","First Option");
+  vopt1.addOpt("2","Second Option");
+  vopt1.addOpt("3","Third Option");
+  vopt1.addOpt("4","Fourth Option: The quick brow fox jump over the lazy dog.");
+  vopt1.addOpt("5","Fifth Option");
+  vopt1.addOpt("6","6 Option");
+  vopt1.addOpt("7","7 Option");
+  vopt1.addOpt("8","8 Option");
+  vopt1.addOpt("9","9 Option");
+  vopt1.addOpt("10","10 Option");
+  vopt1.addOpt("11","11 Option");
+  vopt1.addOpt("12","12 Option");
+  vopt1.addOpt("13","13 Option");
+  vopt1.addOpt("14","14 Option");
+  vopt1.addOpt("15","15 Option");
+  vopt1.addOpt("16","16 Option");
+  vopt1.addOpt("17","17 Option");
+  vopt1.addOpt("18","18 Option");
+  vopt1.addOpt("19","19 Option");
+  vopt1.addOpt("20","20 Option");
+
+  var vopt2=new SelBox("vopt2","opt2",200,150,true,true);
+</script>
+<br><br>
+<input type="submit" value="Submit">
+</form>
+</body>
+</html>

@@ -36,7 +36,6 @@ function SelBox(slObj,slId,width,height,isMul,isMS){
    this.lastSelIdx=-1
    this.width=width
    this.height=height
-   this.oldClickF=null
    this.fOnChange=null
    this.dblClickF=null
    this.isEnabled=true
@@ -64,7 +63,7 @@ function SelBox(slObj,slId,width,height,isMul,isMS){
       txh=';height:'+height+'px;'
    }
    if (isMul){
-      tdE.innerHTML='<div id="'+slId+'d" style="margin:1px;padding:0px;border:1px solid;border-color:#716F64 #F1EFE2 #F1EFE2 #716F64;overflow:auto;'+txw+txh+'">'+
+      tdE.innerHTML='<div id="'+slId+'d" style="margin:1px;padding:0px;border:0px;overflow:auto;'+txw+txh+'">'+
          '<table id="'+slId+'t" cellpadding="0" cellspacing="0" width="100%"></table></div>'
    }else{
       var dvWd=''
@@ -74,7 +73,7 @@ function SelBox(slObj,slId,width,height,isMul,isMS){
       tdE.innerHTML='<div id="'+slId+'d1" style="overflow:hidden;'+txw+'">'+
          '<table id="'+slId+'t1" style="width:100%;" cellpadding="0" cellspacing="0">'+
          '<tr style="width:100%;"><td nowrap="nowrap" onclick="zxshow('+slObj+')"><a href="javascript:var a=0"><div id="'+slId+'ds" style="padding:3px 0px 0px 3px;overflow:hidden;float:left;'+dvWd+'"><span>&nbsp;</span></div></a>'+
-            '<a onclick="zxshow('+slObj+')" onmousedown="if (v'+slId+'.isEnabled){document.getElementById(\''+slId+'i\').src=\''+imgP+'\'}" onmouseout="if (v'+slId+'.isEnabled){document.getElementById(\''+slId+'i\').src=\''+imgU+'\'}" onmouseup="if (v'+slId+'.isEnabled){document.getElementById(\''+slId+'i\').src=\''+imgU+'\'}">'+
+            '<a onclick="zxshow('+slObj+')" onmousedown="if ('+slObj+'.isEnabled){document.getElementById(\''+slId+'i\').src=\''+imgP+'\'}" onmouseout="if ('+slObj+'.isEnabled){document.getElementById(\''+slId+'i\').src=\''+imgU+'\'}" onmouseup="if ('+slObj+'.isEnabled){document.getElementById(\''+slId+'i\').src=\''+imgU+'\'}">'+
                '<img id="'+slId+'i" style="padding:2px 2px 0px 0px;" src="'+imgU+'" alt="V" /></a></td></tr></table></div>'
       var tb2=document.createElement('table')
       tab.parentNode.appendChild(tb2)
@@ -215,8 +214,8 @@ SelBox.prototype.sortOpts=function sortOpts() {
       for (var j=i+1;j<this.txts.length;j++){
          if (this.txts[i]>this.txts[j]){
             if (this.isMul){
-               mtb.moveRow(i,j)
-               mtb.moveRow(j-1,i)
+//               mtb.moveRow(i,j)
+               exTr(mtb,i,j)
                var tvl=this.txts[i]
                this.txts[i]=this.txts[j]
                this.txts[j]=tvl
@@ -455,7 +454,7 @@ function zxkp(e,zxObj,zxIdx){
             zxObj.removeSels();
             zxObj.setSelIdx(zxObj.ids[o1+1])
 //            if (navigator.appName=="Netscape"){
-//               nv.scrollIntoView(true)
+//               nv.(true)
 //            }
             nv.focus()
          }
@@ -512,11 +511,8 @@ function zxkp2(e,zxObj,zxIdx){
       if (eo.preventDefault) eo.preventDefault();
       if (eo.stopPropagation) eo.stopPropagation();
    }else if (uc==27){
-//      var bdy=document.getElementsByTagName('body')[0]
-      if (zxObj.oldClickF!=null){
-         window.document.onclick=zxObj.oldClickF
-         zxObj.oldClickF=null
-      }
+      window.document.removeEventListener('click', window.zxClose1);
+      window.removeEventListener('blur', window.zxClose2);
       document.getElementById(zxObj.slId+'dat').style.display='none'
       eo.cancelBubble=true
       if (eo.preventDefault) eo.preventDefault();
@@ -538,42 +534,33 @@ function zxsel2(zxObj,zxIdx){
    zxObj.setSelIdx2(zxIdx)
    document.getElementById(zxObj.slId+'dat').style.display='none'
 }
-function zxClick(zxObj) {
-   alert('pass d'+zxObj)
-//   var bdy=document.getElementsByTagName('body')[0]
-   if (zxObj.oldClickF!=null){
-      window.document.onclick=zxObj.oldClickF
-      zxObj.oldClickF=null
-   }
-   document.getElementById(zxObj.slId+'dat').style.display='none'
-}
 
 function zxshow(zxObj){
    if (!zxObj.isEnabled) return
-   if (zxObj.oldClickF!=null){
-      zxObj.oldClickF()
-   }
-//   window.document.onclick=function(){
-//      zxClick(zxObj)
-//   };
-   var cw = window
-        alert('crazynow'+cw.parent)
+
+   var cw=window
    if (cw.document.addEventListener) {
-      cw.document.addEventListener('click',function zxClick(event){
-         alert('now pass');
-         document.getElementById(zxObj.slId+'dat').style.display='none';
-         cw.document.removeEventListener(event.type, zxClick);
-      });
-
-      while (cw.frameElement) {
-
-        cw=cw.parent
-        cw.document.addEventListener('click',function zxClick(event){
-           alert('now pass');
-           document.getElementById(zxObj.slId+'dat').style.display='none';
-           cw.document.removeEventListener(event.type, zxClick);
-        });
-      }
+     cw.document.addEventListener('click',function zxClose1(event){
+       cw.document.getElementById(zxObj.slId+'dat').style.display='none';
+       cw.document.removeEventListener('click', cw.zxClose1);
+       cw.removeEventListener('blur', cw.zxClose2);
+     });
+     cw.addEventListener('blur',function zxClose2(event){
+       cw.document.getElementById(zxObj.slId+'dat').style.display='none';
+       cw.document.removeEventListener('click', cw.zxClose1);
+       cw.removeEventListener('blur', cw.zxClose2);
+     });
+   } else {
+     cw.document.attachEvent('click',function zxClose1(event){
+       cw.document.getElementById(zxObj.slId+'dat').style.display='none';
+       cw.document.detachEvent('click', cw.zxClose1);
+       cw.detachEvent('blur', cw.zxClose2);
+     });
+     cw.attachEvent('blur',function zxClose2(event){
+       cw.document.getElementById(zxObj.slId+'dat').style.display='none';
+       cw.document.detachEvent('click', cw.zxClose1);
+       cw.detachEvent('blur', cw.zxClose2);
+     });
    }
 
    var e = window.event || arguments.callee.caller.arguments[0];
@@ -734,9 +721,9 @@ function moveSelOpts(zxObj1,zxObj2){
    }
    if (idx!=null){
       var rr=document.getElementById(zxObj2.slId+'a'+idx)
-      if (navigator.appName=="Netscape"){
-         rr.scrollIntoView(true)
-      }
+//      if (navigator.appName=="Netscape"){
+//         rr.scrollIntoView(true)
+//      }
       rr.focus()
       if (lRow<zxObj1.ids.length) zxObj1.selOpt(lRow)
       else if (zxObj1.ids.length>0) zxObj1.selOpt(zxObj1.ids.length-1)
@@ -756,7 +743,8 @@ function moveUpSelOpt(zxObj){
    if (i<1) return
    var j=i-1
    var mtb=document.getElementById(zxObj.slId+'t')
-   mtb.moveRow(i,j)
+//   mtb.moveRow(i,j)
+   exTr(mtb,i,j)
    var tvl=zxObj.txts[i]
    zxObj.txts[i]=zxObj.txts[j]
    zxObj.txts[j]=tvl
@@ -767,18 +755,26 @@ function moveUpSelOpt(zxObj){
    zxObj.ids[i]=zxObj.ids[j]
    zxObj.ids[j]=tvl
    var nv=document.getElementById(zxObj.slId+'a'+zxObj.lastSelIdx)
-   if (navigator.appName=="Netscape"){
-      nv.scrollIntoView(true)
-   }
+//   if (navigator.appName=="Netscape"){
+//      nv.scrollIntoView(true)
+//   }
    nv.focus()
 }
+function exTr(tbl,r1,r2) {
+   var cr=tbl.rows[r1].innerHTML
+   tbl.rows[r1].innerHTML=tbl.rows[r2].innerHTML
+   tbl.rows[r2].innerHTML=cr
+}
+
 function moveDownSelOpt(zxObj){
    if (zxObj.lastSelIdx<0) return
    var i=zxObj.getOrderIdx(zxObj.lastSelIdx);
    var j=i+1
    if (j>=zxObj.ids.length) return
    var mtb=document.getElementById(zxObj.slId+'t')
-   mtb.moveRow(i,j)
+//   mtb.moveRow(i,j)
+   exTr(mtb,i,j)
+
    var tvl=zxObj.txts[i]
    zxObj.txts[i]=zxObj.txts[j]
    zxObj.txts[j]=tvl
@@ -789,9 +785,9 @@ function moveDownSelOpt(zxObj){
    zxObj.ids[i]=zxObj.ids[j]
    zxObj.ids[j]=tvl
    var nv=document.getElementById(zxObj.slId+'a'+zxObj.lastSelIdx)
-   if (navigator.appName=="Netscape"){
-      nv.scrollIntoView(true)
-   }
+//   if (navigator.appName=="Netscape"){
+//      nv.scrollIntoView(true)
+//   }
    nv.focus()
 }
 function zxtrim(str) {
