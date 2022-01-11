@@ -1,0 +1,32 @@
+#mnu {
+   background-color:powderblue;position:fixed;top:0px;width:100%;border-bottom:3px solid #C0C0C0;
+}
+body { font-family:helvetica,sans-serif;margin:0px;color:#003300 }
+.hamburger-label{font-weight:600;display:inline-block;margin-left:5px;vertical-align:5px;}
+#cnt {margin-top:50px}
+#customsb {display:block}
+.parag {margin-left:15%;margin-right:15%}
+
+
+.selbox * {font-family:helvetica,sans-serif;font-size:12px;margin:0px;padding:0px;border:none;}
+.selbox table {border-collapse:collapse;border-spacing:0px;}
+.selbox .sbunsel {outline:0px;}
+.selbox .sbsel {outline:0px;}
+.selbox a {
+    text-decoration: none;
+    color:black;
+}
+.sbsel {cursor:pointer;
+   background:#316AC5
+}
+.sbsel div {
+   background:#316AC5;
+   color:#FFFFFF
+}
+.sbunsel {cursor:pointer;
+   background:#FFFFFF
+}
+.sbunsel div {
+   background:#FFFFFF;
+   color:#000000
+}
