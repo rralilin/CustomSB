@@ -44,9 +44,9 @@ function SelBox(slObj,slId,width,height,isMul,isMS){
       cw=cw.parent
    }
    this.rootwin=cw
-   var imgP='cbpressed.png'      // Change path if needed
-   var imgU='cbunpress.png'      // Change path if needed
-   var imgD='cbdisabled.png'     // Change path if needed
+   var imgP='../cbpressed.png'      // Change path if needed
+   var imgU='../cbunpress.png'      // Change path if needed
+   var imgD='../cbdisabled.png'     // Change path if needed
    var tab=document.getElementById(slId)
    tab.className='selbox'
    tab.style.border='1px solid #7F9DB9'

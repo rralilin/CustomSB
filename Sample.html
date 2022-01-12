@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="SampleFiles/styles.css">
+<link rel="stylesheet" href="customsb.css">
+<link rel="stylesheet" href="SampleFiles/hamburgers.css">
+<link rel="stylesheet" href="SampleFiles/jquery-ui.min.css">
+<script src="customsb.js"></script>
+<script src="SampleFiles/jquery-3.3.1.min.js"></script>
+<script src="SampleFiles/jquery-ui.min.js"></script>
+</head>
+<body id="bdy">
+<div id="mnu">
+  <div class="hamburger hamburger--spin">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+    <div class="hamburger-label">MENU</div>
+  </div>
+  <script>
+    var $hamburger = $(".hamburger");
+    $hamburger.on("click", function(e) {
+      $hamburger.toggleClass("is-active");
+      // Do something else, like open/close menu
+    });
+</script>
+</div>
+
+
+<div id="cnt">
+<br>
+<div id="customsb">
+<div class="parag">I developed the custom select library when IE 6 was the latest version and the motivation to develop it was to solve two HTML <code>&lt;SELECT&gt;</code> tag display issues in this browser version.  The first issue was an HTML <code>&lt;SELECT&gt;</code> always displays on top thus messes the z-index display order of HTML elements.  The second issue was both the select box and the drop box will always have the same width so if one option contains a very long option text, it's either truncate options with long text or mess up the page display with a very long select box.  The following are examples of the custom select box.  Notice the drop box expands to the longest option text. If the drop box displays beyond the right side of the current window, the drop box is aligned from the right side of the select box.  The following keyboard keys work as expected: enter, tab, shift+tab, down/up arrow, escape, shift+click, ctrl+click.
+</div><br>
+</div>
+</div>
+<iframe src="SampleFiles/csb1.html" class="parag" style="background-color:white;" width="70%" height="200" scrolling="yes" frameBorder="1"></iframe><br><br>
+<div class="parag">The custom select library can also be used to create a select list.  If an option in the select list has a long text that overflows, a horizontal scroll bar will appear.  The following are examples of custom select list.
+</div><br>
+<iframe src="SampleFiles/csb2.html" class="parag" style="background-color:white;" width="70%" height="300" scrolling="yes" frameBorder="1"></iframe><br><br>
+<div class="parag">I have updated the custom select library and tested it to work with Chrome 65, Microsoft Edge 41, and Internet Explorer 11.  To use  it, first the custom select Javascript and CSS must be linked to the page: <br>
+<pre>
+&lt;head&gt;
+...
+&lt;link rel="stylesheet" href="customsb.css"&gt;
+&lt;script src="customsb.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+</pre><br>
+Then place the custom select marker in the page body where the custom select box/list will be displayed.  Note that the id attribute will be used as the form element name of the select box/list when it is submitted:<br>
+<pre>
+&lt;body&gt;
+...
+&lt;table class="selbox" id="opt1" cellpadding="0" cellspacing="0"&gt;&lt;/table&gt;
+&lt;/body&gt;
+</pre><br>
+The custom select box/list will then be created in a Javascript code that is placed after the custom select marker. Custom select options are added also via Javascript code:<br>
+<pre>
+&lt;script&gt;
+  /* Create the SelBox object
+     The first SelBox parameter and the variable name where the SelBox object is assigned
+       must be the same
+     The second parameter must be the same as the id attribute of the marker.  This becomes
+       the form element name of the select box/list when the form is submitted
+     The third parameter is the width of the custom select box/list
+     The fourth parameter is the height of the drop box if this is a custom select box or the
+       height of the custom select list if this is a custom select list
+     The sixth parameter is true if this is a custom select list or false if this is a custom
+       select box
+     The seventh parameter is true if multiple select is allowed, false if not. This parameter
+       is ignored if this is a select box
+  */
+
+  var vopt1 = new SelBox("vopt1","opt1",200,150,true,true);
+
+  /* addOpt adds options to the custom select. The first parameter is the option value and
+       the second parameter is the option text.
+  */
+  vopt1.addOpt("1","First Option");
+  vopt1.addOpt("2","Second Option");
+  vopt1.addOpt("3","Third Option");
+
+  /* There are many functions for custom select. The following are some of the functions (replace
+       vopt1 with the actual SelBox variable):
+     -- select a row (for custom select box, row starts from 0)
+     vopt1.setSelIdx2(&lt;index number to be selected&gt;);
+     -- check if a certain row is selected
+     vopt1.isIdxSelected(&lt;index number&gt;);
+     -- select all options
+     vopt1.selAllOpt();
+     -- transfer all selected options from first SelBox to another SelBox
+     moveSelOpts(&lt;from Selbox&gt;,&lt;to Selbox&gt;);
+     -- transfer all options from first SelBox to another SelBox
+     moveAllOpts(&lt;from Selbox&gt;,&lt;to Selbox&gt;);
+     -- Move up the last selected option in the SelBox
+     moveUpSelOpt(&lt;Selbox&gt;)
+     -- Move down the last selected option in the SelBox
+     moveDownSelOpt(&lt;Selbox&gt;)
+   */
+&lt;/script&gt;
+</pre><br>
+This is the <a href="https://github.com/rralilin/CustomSB">link</a> to GitHub for custom select project. The custom select library still needs improvement especially with display customization.
+</div>
+<div id="drawchart">
+<object width="100%" height="500px" data="drawchart.class">
+</object>
+</div>
+</body>
+</html>
